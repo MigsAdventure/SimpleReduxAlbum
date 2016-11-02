@@ -5,16 +5,13 @@ import Polaroid from 'polaroid-image';
 import { delPic } from '../actions/PicActions';
 import Modal from './Modal';
 
-class ResultsTable extends Component {
+export default class ResultsTable extends Component {
   constructor() {
     super();
     this.state = {
       itemEdit: null,
+      search: null,
     };
-    this.deletePic = this.deletePic.bind(this);
-  }
-  deletePic(id) {
-    this.props.delPic(id);
   }
 
   openModal(pic) {
@@ -22,20 +19,38 @@ class ResultsTable extends Component {
       itemEdit: pic,
     }
   );
+  }
 
+  search() {
+    let { searchInput } = this.refs;
+    this.setState({
+      search: searchInput.value,
+    });
   }
 
   render() {
-    const results = this.props.results;
-    console.log('results in TABLE: ', results)
+    let results = this.props.results;
     return (
       <div>
         <Modal edit={this.state.itemEdit} />
+        <input type="text" placeholder='search' ref='searchInput' onChange={() => this.search()}/>
         {
+          results ?
           results.map((pic) => {
+            if (pic.name.includes(this.state.search)) {
+              return (
+                <div className='polContainer' key={pic.id} onClick={() => this.openModal(pic)} data-toggle='modal' data-target='#myModal' >
+                  <Polaroid imgSrc={pic.image} zoom='false' />
+                  <h4>{pic.name}</h4>
+                </div>
+              );
+            }
+          } )
+          :
+          results.map((pic) => {
+
             return (
               <div className='polContainer' key={pic.id} onClick={() => this.openModal(pic)} data-toggle='modal' data-target='#myModal' >
-                <button className='btn-danger btn btn-xs' onClick={() => this.deletePic(pic.id)} id={pic.id} >x</button>
                 <Polaroid imgSrc={pic.image} zoom='false' />
                 <h4>{pic.name}</h4>
               </div>
@@ -46,12 +61,3 @@ class ResultsTable extends Component {
     );
   }
 }
-
-
-const mapDispatchToProps = dispatch => ({
-  delPic(id) {
-    dispatch(delPic(id));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(ResultsTable);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editPic } from '../actions/PicActions';
+import { editPic, delPic } from '../actions/PicActions';
 
 class Modal extends Component {
   constructor(props) {
@@ -40,6 +40,10 @@ class Modal extends Component {
     });
   }
 
+  deletePic(id) {
+    this.props.delPic(id);
+  }
+
 
   render() {
     let { name, image, id } = this.state || [];
@@ -67,6 +71,7 @@ class Modal extends Component {
               </div>
               <div className='btnContainer'>
                 <button className='btn btn-primary' data-dismiss='modal' onClick={() => this.saveEdit()} >Save</button>
+                <button className='btn btn-danger' data-dismiss='modal' onClick={() => this.deletePic(id)} >Delete</button>
                 <button className='btn btn-success' data-dismiss='modal'>Cancel</button>
               </div>
             </div>
@@ -80,6 +85,10 @@ class Modal extends Component {
 let mapDispatchToProps = dispatch => ({
   editPic(editPackage) {
     dispatch(editPic(editPackage));
+  },
+
+  delPic(id) {
+    dispatch(delPic(id));
   },
 
 });
