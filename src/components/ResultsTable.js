@@ -11,7 +11,7 @@ export default class ResultsTable extends Component {
     this.state = {
       itemEdit: null,
       search: null,
-      sorting: false,
+      test: false,
     };
   }
 
@@ -31,23 +31,28 @@ export default class ResultsTable extends Component {
 
   sortPics() {
     this.setState({
-      sorting: true,
+      test: !this.state.test,
     });
   }
 
   render() {
     let results = this.props.results;
-    console.log(this.state.sorting)
-    if (this.state.sorting) {
-      results.sort(a, b => {
-        return a.name - b.name;
-      })
+
+
+    if (this.state.test) {
+        console.log(this.state.test)
+      results = results.sort((a, b) => {
+        //  a.name < b.name ? 1 : 1
+        if(a.name > b.name) {
+          return 1
+        }
+      });
     }
     return (
       <div>
         <Modal edit={this.state.itemEdit} />
         <input type="text" placeholder='search' ref='searchInput' onChange={() => this.search()}/>
-        {/* <button onClick={this.sortPics}>sort</button> */}
+        <button onClick={this.sortPics.bind(this)}>sort</button>
         {
           this.state.search ?
           results.map((pic) => {
