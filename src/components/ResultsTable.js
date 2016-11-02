@@ -11,6 +11,7 @@ export default class ResultsTable extends Component {
     this.state = {
       itemEdit: null,
       search: null,
+      sorting: false,
     };
   }
 
@@ -28,16 +29,29 @@ export default class ResultsTable extends Component {
     });
   }
 
+  sortPics() {
+    this.setState({
+      sorting: true,
+    });
+  }
+
   render() {
     let results = this.props.results;
+    console.log(this.state.sorting)
+    if (this.state.sorting) {
+      results.sort(a, b => {
+        return a.name - b.name;
+      })
+    }
     return (
       <div>
         <Modal edit={this.state.itemEdit} />
         <input type="text" placeholder='search' ref='searchInput' onChange={() => this.search()}/>
+        {/* <button onClick={this.sortPics}>sort</button> */}
         {
-          results ?
+          this.state.search ?
           results.map((pic) => {
-            if (pic.name.includes(this.state.search)) {
+            if (pic.name.toLowerCase().includes(this.state.search.toLowerCase())) {
               return (
                 <div className='polContainer' key={pic.id} onClick={() => this.openModal(pic)} data-toggle='modal' data-target='#myModal' >
                   <Polaroid imgSrc={pic.image} zoom='false' />
@@ -45,7 +59,7 @@ export default class ResultsTable extends Component {
                 </div>
               );
             }
-          } )
+          })
           :
           results.map((pic) => {
 
