@@ -1,0 +1,25 @@
+body {
+  text-align: center;
+}
+
+.polContainer {
+  display:inline-block;
+  position: relative;
+}
+
+input {
+  display:block;
+  margin: auto;
+}
+
+h4 {
+  position: absolute;
+  bottom:2em;
+  left:0;
+  right:0;
+  margin:auto;
+}
+
+form {
+  text-align: center;
+}
