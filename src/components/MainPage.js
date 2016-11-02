@@ -8,7 +8,6 @@ import ResultsTable from './ResultsTable';
 class MainPage extends Component {
   render() {
     let { allPics, delPic, editPic, addPic  } = this.props;
-    console.log('allPicsMAINPAGE: ', allPics);
     return (
       <div>
         <InputForm />

@@ -5,7 +5,10 @@ export default function (state = [], action) {
     case 'DELETE_PIC':
       return state.filter(pic => pic.id !== action.payload.id)
     case 'EDIT_PIC':
-      return state;
+      let editArr = state.map((pic) => {
+        pic.id === action.payload.editPack.id ? action.payload.editPack : pic
+      });
+    return state.map(pic => pic.id === action.payload.editPack.id ? action.payload.editPack : pic)
     default:
       return state;
   }

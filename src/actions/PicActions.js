@@ -18,8 +18,9 @@ export function getPics() {
   };
 }
 
-export function editPic() {
+export function editPic(editPack) {
   return {
     type: 'EDIT_PIC',
+    payload: { editPack },
   };
 }

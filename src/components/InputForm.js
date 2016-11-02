@@ -37,7 +37,6 @@ const mapStateToProps = state => ({
   allPics: state.allPics,
 });
 
-
 const mapDispatchToProps = dispatch => ({
   addPic(picPackage) {
     dispatch(addPic(picPackage));

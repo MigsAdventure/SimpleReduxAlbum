@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { delPic, editPic } from '../actions/PicActions';
+import { editPic } from '../actions/PicActions';
 
-export default class Modal extends Component {
+class Modal extends Component {
   constructor(props) {
     super(props);
     this.editValues = this.editValues.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
     this.state = this.props;
-    console.log('modal props: ', this.state);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.client !== this.state.client) {
+    if (nextProps !== this.state) {
       this.setState({
-        name: nextProps.name,
-        image: nextProps.image,
-        id: nextProps.id,
+        name: nextProps.edit.name,
+        image: nextProps.edit.image,
+        id: nextProps.edit.id,
       });
     }
   }
@@ -28,8 +27,7 @@ export default class Modal extends Component {
       image,
       id,
     };
-    console.log('editPackage', editPackage );
-    // this.props.editPic(editPackage);
+    this.props.editPic(editPackage);
   }
 
   editValues() {
@@ -56,11 +54,10 @@ export default class Modal extends Component {
             <div className='modal-content thirdLevelModal'>
               <div className='modalPicContainer fourthLevelModal' >
 
-                <h4 className='headings title'><b>Name: </b>{name}</h4>
+                <h3 className='headings title'>{name}</h3>
                 <img src={image || 'http://glitch.news/wp-content/uploads/sites/19/2016/08/anon-troll.jpg'}
                   role='presentation' />
               </div>
-
               <div className='editContainer'>
                 <h3>Edit Photo</h3>
                 <form>
@@ -79,3 +76,12 @@ export default class Modal extends Component {
     );
   }
 }
+
+let mapDispatchToProps = dispatch => ({
+  editPic(editPackage) {
+    dispatch(editPic(editPackage));
+  },
+
+});
+
+export default connect(null, mapDispatchToProps)(Modal);

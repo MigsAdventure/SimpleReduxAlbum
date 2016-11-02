@@ -23,3 +23,12 @@ h4 {
 form {
   text-align: center;
 }
+
+.btn-danger {
+  position: absolute;
+  top:1em;
+  right:1em;
+  background: transparent;
+  color:black;
+  outline:none;
+}
